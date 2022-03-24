@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Quiz de géographie</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+</head>
+
+<body class="bg-dark text-light">
+<form action="{% url 'quiz' %}" method="post">
+    {% csrf_token %}
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <div class="d-grid col-xs-12 col-md-10 p-3">
+                {% if question|length == 2 %}
+                <div class="alert alert-dark" role="alert">Question #{{ question_number }}: Le drapeau <img src="https://flagcdn.com/w320/{{ question|lower }}.png" height="100" class="border border-dark"> est celui de quel pays?</div>
+                {% else %}
+                <div class="alert alert-dark" role="alert">Question #{{ question_number }}: {{ question|capfirst }}</div>
+                {% endif %}
+            </div>
+        </div>
+        {% if answer_is_good %}
+        <div class="row justify-content-md-center">
+            {% for choice in quiz_dict %}
+            {% if choice.1 == good_answer %}
+            <div class="d-grid col-xs-12 col-md-5 p-3">
+                {% if choice.1|length == 2 %}
+                <button type="button" class="btn bg-transparent btn-outline-success border-3" disabled><img
+                        src="https://flagcdn.com/w320/{{ choice.1|lower }}.png" height="100"></button>
+                {% else %}
+                <button type="button" class="btn btn-success text-start" disabled>{{ choice.1|capfirst }}</button>
+                {% endif %}
+            </div>
+            {% else %}
+            <div class="d-grid col-xs-12 col-md-5 p-3">
+                {% if choice.1|length == 2 %}
+                <button type="button" class="btn bg-transparent btn-outline-secondary border-3" disabled><img
+                        src="https://flagcdn.com/w320/{{ choice.1|lower }}.png" height="100"></button>
+                {% else %}
+                <button type="button" class="btn btn-secondary text-start" disabled>{{ choice.1|capfirst }}</button>
+                {% endif %}
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="row justify-content-md-center">
+            {% for choice in quiz_dict %}
+            {% if choice.1 == good_answer %}
+            <div class="d-grid col-xs-12 col-md-5 p-3">
+                {% if choice.1|length == 2 %}
+                <button type="button" class="btn bg-transparent btn-outline-success border-3" disabled><img
+                        src="https://flagcdn.com/w320/{{ choice.1|lower }}.png" height="100"></button>
+                {% else %}
+                <button type="button" class="btn btn-success text-start" disabled>{{ choice.1|capfirst }}</button>
+                {% endif %}
+            </div>
+            {% elif choice.1 == answer %}
+            <div class="d-grid col-xs-12 col-md-5 p-3">
+                {% if choice.1|length == 2 %}
+                <button type="button" class="btn bg-transparent btn-outline-danger border-3" disabled><img
+                        src="https://flagcdn.com/w320/{{ choice.1|lower }}.png" height="100"></button>
+                {% else %}
+                <button type="button" class="btn btn-danger text-start" disabled>{{ choice.1|capfirst }}</button>
+                {% endif %}
+            </div>
+            {% else %}
+            <div class="d-grid col-xs-12 col-md-5 p-3">
+                {% if choice.1|length == 2 %}
+                <button type="button" class="btn bg-transparent btn-outline-secondary border-3" disabled><img
+                        src="https://flagcdn.com/w320/{{ choice.1|lower }}.png" height="100"></button>
+                {% else %}
+                <button type="button" class="btn btn-secondary text-start" disabled>{{ choice.1|capfirst }}</button>
+                {% endif %}
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+        {% endif %}
+        <div class="row justify-content-md-center">
+            <div class="d-grid col-xs-12 col-md-5 p-3">
+                {% if lifes > 0 %}
+                <button type="submit" class="btn btn-primary">Continuer</button>
+                {% else %}
+                <button type="submit" class="btn btn-primary">Terminer</button>
+                {% endif %}
+            </div>
+            <div class="d-grid col-xs-12 col-md-5 p-3">
+                <div class="row">
+                {% if lifes == 3 %}
+                <div class="col"><h5>{{ points|stringformat:"03d" }} point{{ points|pluralize }} {% if points_to_add > 0 %}(+{{ points_to_add }}){% endif %}</h5></div>
+                    <div class="col"><h5>&#10084; &#10084; &#10084;</h5></div>
+                {% elif lifes == 2 %}
+                <div class="col"><h5>{{ points|stringformat:"03d" }} point{{ points|pluralize }} {% if points_to_add > 0 %}(+{{ points_to_add }}){% endif %}</h5></div>
+                    <div class="col"><h5>&#10084; &#10084;</h5></div>
+                {% elif lifes == 1 %}
+                <div class="col"><h5>{{ points|stringformat:"03d" }} point{{ points|pluralize }} {% if points_to_add > 0 %}(+{{ points_to_add }}){% endif %}</h5></div>
+                    <div class="col"><h5>&#10084;</h5></div>
+                {% else %}
+                <div class="col"><h5>{{ points|stringformat:"03d" }} point{{ points|pluralize }} {% if points_to_add > 0 %}(+{{ points_to_add }}){% endif %}</h5></div>
+                    <div class="col"></div>
+                {% endif %}
+                </div>
+            </div>
+        </div>
+
+    </div>
+    </div>
+</form>
+</div>
+</body>
+</html>

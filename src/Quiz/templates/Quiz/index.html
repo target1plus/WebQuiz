@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Quiz de géographie</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+            integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+
+    <script>
+    $(document).ready(function () {
+      $("#checkAll").change(function () {
+        $("input:checkbox").prop('checked', $(this).prop("checked"));
+      });
+      $('.chk').on('click', function () {
+        if ($('.chk:checked').length == $('.chk').length) {
+          $('#checkAll').prop('checked', true);
+        } else {
+          $('#checkAll').prop('checked', false);
+        }
+      });
+    });
+
+
+
+    </script>
+
+</head>
+
+<body class="bg-dark text-light">
+<form action="{% url 'index' %}" method="post">
+    {% csrf_token %}
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <div class="d-grid col-xs-8 col-md-12 p-3">
+                <h1 class="text-center">Bienvenue sur le Quiz de géographie</h1>
+            </div>
+        </div>
+        <div class="row justify-content-md-center">
+            <div class="d-grid col-xs-8 col-md-4 p-3">
+                <input type="text" class="form-control" name="username" placeholder="Nom d'utilisateur"
+                       aria-label="Nom d'utilisateur">
+            </div>
+            <div class="d-grid col-xs-8 col-md-4 p-3">
+                <button type="submit" class="btn btn-primary">Démarrer le quiz</button>
+            </div>
+            <div class="d-grid col-xs-8 col-md-4 p-3">
+                <a href="{% url 'leaderboard-view' %}" class="btn btn-primary">Visualiser le classement</a>
+            </div>
+        </div>
+
+
+        <div class="row justify-content-md-center">
+            <div class="d-grid col-xs-8 col-md-12 pt-3 pb-3">
+                <h6 class="text-start">Options des types de question</h6>
+            </div>
+        </div>
+
+        <div class="row justify-content-md-center">
+            <div class="d-grid col-xs-8 col-md-3">
+                <div class="form-check">
+                    <input class="form-check-input chk" type="checkbox" name="questions_type[]" value="0" id="0"
+                           checked>
+                    <label class="form-check-label" for="0">
+                        Capitale à partir du pays
+                    </label>
+                </div>
+            </div>
+            <div class="d-grid col-xs-8 col-md-3">
+                <div class="form-check">
+                    <input class="form-check-input chk" type="checkbox" name="questions_type[]" value="1" id="1"
+                           checked>
+                    <label class="form-check-label" for="1">
+                        Pays à partir de la capitale
+                    </label>
+                </div>
+            </div>
+            <div class="d-grid col-xs-8 col-md-3">
+                <div class="form-check">
+                    <input class="form-check-input chk" type="checkbox" name="questions_type[]" value="2" id="2"
+                           checked>
+                    <label class="form-check-label" for="2">
+                        Frontières à partir du pays
+                    </label>
+                </div>
+            </div>
+            <div class="d-grid col-xs-8 col-md-3">
+                <div class="form-check">
+                    <input class="form-check-input chk" type="checkbox" name="questions_type[]" value="3" id="3"
+                           checked>
+                    <label class="form-check-label" for="3">
+                        Pays à partir des frontières
+                    </label>
+                </div>
+            </div>
+            <div class="d-grid col-xs-8 col-md-3">
+                <div class="form-check">
+                    <input class="form-check-input chk" type="checkbox" name="questions_type[]" value="4" id="4"
+                           checked>
+                    <label class="form-check-label" for="4">
+                        Population à partir du pays
+                    </label>
+                </div>
+            </div>
+            <div class="d-grid col-xs-8 col-md-3">
+                <div class="form-check">
+                    <input class="form-check-input chk" type="checkbox" name="questions_type[]" value="5" id="5"
+                           checked>
+                    <label class="form-check-label" for="5">
+                        Pays à partir de la population
+                    </label>
+                </div>
+            </div>
+            <div class="d-grid col-xs-8 col-md-3">
+                <div class="form-check">
+                    <input class="form-check-input chk" type="checkbox" name="questions_type[]" value="6" id="6"
+                           checked>
+                    <label class="form-check-label" for="6">
+                        Superficie à partir du pays
+                    </label>
+                </div>
+            </div>
+            <div class="d-grid col-xs-8 col-md-3">
+                <div class="form-check">
+                    <input class="form-check-input chk" type="checkbox" name="questions_type[]" value="7" id="7"
+                           checked>
+                    <label class="form-check-label" for="7">
+                        Pays à partir de la superficie
+                    </label>
+                </div>
+            </div>
+            <div class="d-grid col-xs-8 col-md-3">
+                <div class="form-check">
+                    <input class="form-check-input chk" type="checkbox" name="questions_type[]" value="8" id="8"
+                           checked>
+                    <label class="form-check-label" for="8">
+                        Pays enclavé
+                    </label>
+                </div>
+            </div>
+            <div class="d-grid col-xs-8 col-md-3">
+                <div class="form-check">
+                    <input class="form-check-input chk" type="checkbox" name="questions_type[]" value="9" id="9"
+                           checked>
+                    <label class="form-check-label" for="9">
+                        Pays non-enclavé
+                    </label>
+                </div>
+            </div>
+            <div class="d-grid col-xs-8 col-md-3">
+                <div class="form-check">
+                    <input class="form-check-input chk" type="checkbox" name="questions_type[]" value="10" id="10"
+                           checked>
+                    <label class="form-check-label" for="10">
+                        Pays avec conduite à droite
+                    </label>
+                </div>
+            </div>
+            <div class="d-grid col-xs-8 col-md-3">
+                <div class="form-check">
+                    <input class="form-check-input chk" type="checkbox" name="questions_type[]" value="11" id="11"
+                           checked>
+                    <label class="form-check-label" for="11">
+                        Pays avec conduite à gauche
+                    </label>
+                </div>
+            </div>
+            <div class="d-grid col-xs-8 col-md-3">
+                <div class="form-check">
+                    <input class="form-check-input chk" type="checkbox" name="questions_type[]" value="12" id="12"
+                           checked>
+                    <label class="form-check-label" for="12">
+                        Sous-région à partir du pays
+                    </label>
+                </div>
+            </div>
+            <div class="d-grid col-xs-8 col-md-3">
+                <div class="form-check">
+                    <input class="form-check-input chk" type="checkbox" name="questions_type[]" value="13" id="13"
+                           checked>
+                    <label class="form-check-label" for="13">
+                        Pays à partir de la sous-région
+                    </label>
+                </div>
+            </div>
+            <div class="d-grid col-xs-8 col-md-3">
+                <div class="form-check">
+                    <input class="form-check-input chk" type="checkbox" name="questions_type[]" value="14" id="14"
+                           checked>
+                    <label class="form-check-label" for="14">
+                        Pays dans l'hémisphère nord
+                    </label>
+                </div>
+            </div>
+            <div class="d-grid col-xs-8 col-md-3">
+                <div class="form-check">
+                    <input class="form-check-input chk" type="checkbox" name="questions_type[]" value="15" id="15"
+                           checked>
+                    <label class="form-check-label" for="15">
+                        Pays dans l'hémisphère sud
+                    </label>
+                </div>
+            </div>
+            <div class="d-grid col-xs-8 col-md-3">
+                <div class="form-check">
+                    <input class="form-check-input chk" type="checkbox" name="questions_type[]" value="16" id="16"
+                           checked>
+                    <label class="form-check-label" for="16">
+                        Pays dans l'hémisphère est
+                    </label>
+                </div>
+            </div>
+            <div class="d-grid col-xs-8 col-md-3">
+                <div class="form-check">
+                    <input class="form-check-input chk" type="checkbox" name="questions_type[]" value="17" id="17"
+                           checked>
+                    <label class="form-check-label" for="17">
+                        Pays dans l'hémisphère ouest
+                    </label>
+                </div>
+            </div>
+            <div class="d-grid col-xs-8 col-md-3">
+                <div class="form-check">
+                    <input class="form-check-input chk" type="checkbox" name="questions_type[]" value="18" id="18"
+                           checked>
+                    <label class="form-check-label" for="18">
+                        Drapeau à partir du pays
+                    </label>
+                </div>
+            </div>
+            <div class="d-grid col-xs-8 col-md-3">
+                <div class="form-check">
+                    <input class="form-check-input chk" type="checkbox" name="questions_type[]" value="19" id="19"
+                           checked>
+                    <label class="form-check-label" for="19">
+                        Pays à partir du drapeau
+                    </label>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row justify-content-md-center">
+            <div class="d-grid col-xs-8 col-md-12 pt-3">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="checkAll" checked>
+                    <label class="form-check-label" for="checkAll">
+                        Tout sélectionner / Tout désélectionner
+                    </label>
+                </div>
+            </div>
+        </div>
+        {% if error_1 %}
+        <div class="row justify-content-md-center">
+            <div class="d-grid col-xs-8 col-md-12 pt-3 text-danger text-start">
+                Nom d'utilisateur invalide (1-50 caractères alphanumériques requis)
+
+            </div>
+        </div>
+        {% endif %}
+        {% if error_2 %}
+        <div class="row justify-content-md-center">
+            <div class="d-grid col-xs-8 col-md-12 pt-3 text-danger text-start">
+                Au minimum, une sélection est requise.
+
+            </div>
+        </div>
+        {% endif %}
+
+    </div>
+
+</form>
+
+</body>
+
+</html>
